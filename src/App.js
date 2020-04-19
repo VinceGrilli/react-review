@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import logo from './logo.svg';
+import { CardList } from './components/card-list/card-list';
 import './App.css';
 
 function App() {
   const [monsters, setMonster] = useState([]);
+  const [searchField, setSearchField] = useState(``);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,17 +14,15 @@ function App() {
     };
     fetchData();
   }, []);
-  console.log(monsters);
+
   return (
     <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <div>
-          {monsters.map((monster) => (
-            <h1 key={monster.id}>{monster.name}</h1>
-          ))}
-        </div>
-      </header>
+      <input
+        type='search'
+        placeholder='Search Monster'
+        onChange={(e) => setSearchField(e.target.value)}
+      />
+      <CardList monsters={monsters}></CardList>
     </div>
   );
 }
