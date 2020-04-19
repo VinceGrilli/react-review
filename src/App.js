@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { SearchBox } from './components/search-box/search-box';
 import { CardList } from './components/card-list/card-list';
 import './App.css';
 
@@ -15,14 +16,18 @@ function App() {
     fetchData();
   }, []);
 
+  const filteredMonsters = monsters.filter((monster) =>
+    monster.name.toLowerCase().includes(searchField.toLowerCase())
+  );
+
   return (
     <div className='App'>
-      <input
-        type='search'
-        placeholder='Search Monster'
-        onChange={(e) => setSearchField(e.target.value)}
+      <h1>Monsters Rolodex</h1>
+      <SearchBox
+        placeholder='search monsters'
+        handleChange={(e) => setSearchField(e.target.value)}
       />
-      <CardList monsters={monsters}></CardList>
+      <CardList monsters={filteredMonsters}></CardList>
     </div>
   );
 }
