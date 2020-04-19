@@ -1,23 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const [monsters, setMonster] = useState([
-    {
-      name: 'Frankenstein',
-      id: '20394',
-    },
-    {
-      name: 'Dracula',
-      id: '02dd4',
-    },
-    {
-      name: 'Zombie',
-      id: '34234',
-    },
-  ]);
+  const [monsters, setMonster] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios('http://jsonplaceholder.typicode.com/users');
+      setMonster(response.data);
+    };
+    fetchData();
+  }, []);
+  console.log(monsters);
   return (
     <div className='App'>
       <header className='App-header'>
